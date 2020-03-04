@@ -27,7 +27,7 @@ class DataSearch extends SearchDelegate<String> {
 
   @override
   Widget buildResults(BuildContext context) {
-    return Container();
+    Future.delayed(Duration.zero).then((value) => close(context, query));
   }
 
   @override
