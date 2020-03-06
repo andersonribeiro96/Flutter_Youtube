@@ -7,10 +7,11 @@ class Home extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Container(
-          height: 40,
+          height: 25,
           child: Image.asset("assets/images/youtube.png"),
         ),
         elevation: 0,
+        backgroundColor: Colors.black87,
         actions: <Widget>[
           Align(
             alignment: Alignment.center,
@@ -23,7 +24,7 @@ class Home extends StatelessWidget {
                 String result =
                     await showSearch(context: context, delegate: DataSearch());
                 print(result);
-              })
+              }),
         ],
       ),
       body: Container(),

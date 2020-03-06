@@ -11,7 +11,7 @@ class DataSearch extends SearchDelegate<String> {
           icon: Icon(Icons.clear),
           onPressed: () {
             query = "";
-          }),
+          })
     ];
   }
 
@@ -19,7 +19,9 @@ class DataSearch extends SearchDelegate<String> {
   Widget buildLeading(BuildContext context) {
     return IconButton(
         icon: AnimatedIcon(
-            icon: AnimatedIcons.menu_arrow, progress: transitionAnimation),
+          icon: AnimatedIcons.menu_arrow,
+          progress: transitionAnimation,
+        ),
         onPressed: () {
           close(context, null);
         });
@@ -28,6 +30,7 @@ class DataSearch extends SearchDelegate<String> {
   @override
   Widget buildResults(BuildContext context) {
     Future.delayed(Duration.zero).then((value) => close(context, query));
+    return Container();
   }
 
   @override
@@ -36,28 +39,28 @@ class DataSearch extends SearchDelegate<String> {
       return Container();
     } else {
       return FutureBuilder<List>(
-        future: suggestions(query),
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          } else {
-            return ListView.builder(
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(snapshot.data[index]),
-                  leading: Icon(Icons.play_arrow),
-                  onTap: () {
-                    close(context, snapshot.data[index]);
-                  },
-                );
-              },
-              itemCount: snapshot.data.length,
-            );
-          }
-        },
-      );
+          future: suggestions(query),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            } else {
+              return ListView.builder(
+                itemCount: snapshot.data.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text(snapshot.data[index]),
+                    leading: Icon(Icons.play_arrow),
+                    onTap: () {
+                      print(snapshot.data[index]);
+                      close(context, snapshot.data[index]);
+                    },
+                  );
+                },
+              );
+            }
+          });
     }
   }
 
@@ -66,11 +69,13 @@ class DataSearch extends SearchDelegate<String> {
         "http://suggestqueries.google.com/complete/search?hl=en&ds=yt&client=youtube&hjson=t&cp=1&q=$search&format=5&alt=json");
 
     if (response.statusCode == 200) {
-      return json.decode(response.body)[1].map((suggestion) {
-        return suggestion[0];
+      print("Suggestions codigo ${response.statusCode.toString()}");
+      return json.decode(response.body)[1].map((value) {
+        return value[0];
       }).toList();
     } else {
-      throw Exception("Failed to load suggestions");
+      throw Exception(
+          "Failed to load suggestions, ERRO ${response.statusCode.toString()}");
     }
   }
 }
