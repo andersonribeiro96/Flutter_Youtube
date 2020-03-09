@@ -7,7 +7,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      bloc: VideoBloc(),
+      bloc: VideosBloc(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Search Youtube',

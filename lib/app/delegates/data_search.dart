@@ -69,7 +69,6 @@ class DataSearch extends SearchDelegate<String> {
         "http://suggestqueries.google.com/complete/search?hl=en&ds=yt&client=youtube&hjson=t&cp=1&q=$search&format=5&alt=json");
 
     if (response.statusCode == 200) {
-      print("Suggestions codigo ${response.statusCode.toString()}");
       return json.decode(response.body)[1].map((value) {
         return value[0];
       }).toList();

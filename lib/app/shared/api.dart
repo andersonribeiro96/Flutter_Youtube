@@ -20,7 +20,7 @@ class Api {
       List<Video> videos = decoded["items"].map<Video>((value) {
         return Video.fromJson(value);
       }).toList();
-      print(videos);
+      return videos;
     } else {
       print("Api Code Error ${response.statusCode.toString()}");
     }
